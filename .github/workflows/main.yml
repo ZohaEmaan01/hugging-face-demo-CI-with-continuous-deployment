@@ -1,23 +1,29 @@
 name: Sync to Hugging Face hub
+
 on:
   push:
     branches: [main]
 
-  # to run this workflow manually from the Actions tab
+  # To run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the repository
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      # Step 2: Add Hugging Face Space as a remote
       - name: Add remote 
         env:
-          HF: ${{ secrets.HF }}
-        run: git remote add space https://SrinivasRahul:$HF@huggingface.co/spaces/SrinivasRahul/demo
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: git remote add space https://z0haEmaan:$HF_TOKEN@huggingface.co/spaces/z0haEmaan/my-ml-model
+
+      # Step 3: Push to Hugging Face Space
       - name: Push to hub
         env:
-          HF: ${{ secrets.HF }}
-        run: git push --force https://SrinivasRahul:$HF@huggingface.co/spaces/SrinivasRahul/demo main
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: git push --force https://z0haEmaan:$HF_TOKEN@huggingface.co/spaces/z0haEmaan/my-ml-model main
